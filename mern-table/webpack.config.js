@@ -4,7 +4,10 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:8082/",
+    publicPath:
+      argv.mode === "development"
+        ? "http://localhost:8082/"
+        : "https://mf-state-management-mern-table.vercel.app/",
   },
 
   resolve: {
@@ -44,8 +47,15 @@ module.exports = (_, argv) => ({
       name: "mern_table",
       filename: "remoteEntry.js",
       remotes: {
-        store: "store@http://localhost:8081/remoteEntry.js",
-        weatherApi: "weatherApi@http://localhost:8080/remoteEntry.js"
+        store:
+          argv.mode === "development"
+            ? "store@http://localhost:8081/remoteEntry.js"
+            : "store@https://mf-state-management.vercel.app/remoteEntry.js",
+
+        weatherApi:
+          argv.mode === "development"
+            ? "weatherApi@http://localhost:8080/remoteEntry.js"
+            : "weatherApi@https://mf-state-management-weather-api.vercel.app/remoteEntry.js",
       },
       exposes: {},
       shared: {
