@@ -4,7 +4,10 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:8081/",
+    publicPath:
+      argv.mode === "development"
+        ? "http://localhost:8081/"
+        : "https://mf-state-management.vercel.app/",
   },
 
   resolve: {
@@ -40,10 +43,10 @@ module.exports = (_, argv) => ({
         test: /\.(png|jpg|jpeg|gif|svg|ico)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
-              outputPath: 'images', // This is the directory where your images will be output
+              name: "[name].[ext]",
+              outputPath: "images", // This is the directory where your images will be output
             },
           },
         ],
@@ -60,19 +63,30 @@ module.exports = (_, argv) => ({
         "./store": "./src/redux/store",
 
         // weatherApi actions
-        "./getWeatherDataRemote": "./src/redux/weatherApi/actions/getWeatherData",
+        "./getWeatherDataRemote":
+          "./src/redux/weatherApi/actions/getWeatherData",
 
         // mern table actions
-        "./addEmployee": "./src/redux/mernTable/actions/employeeActions/addEmployee",
-        "./addEmployeeReset": "./src/redux/mernTable/actions/employeeActions/addEmployee",
-        "./deleteEmployee": "./src/redux/mernTable/actions/employeeActions/deleteEmployee",
-        "./deleteEmployeeReset": "./src/redux/mernTable/actions/employeeActions/deleteEmployee",
-        "./editEmployee": "./src/redux/mernTable/actions/employeeActions/editEmployee",
-        "./editEmployeeReset": "./src/redux/mernTable/actions/employeeActions/editEmployee",
-        "./getEmployeeProfile": "./src/redux/mernTable/actions/employeeActions/getEmployeeProfile",
-        "./getEmployeeProfileReset": "./src/redux/mernTable/actions/employeeActions/getEmployeeProfile",
-        "./getEmployeeTable": "./src/redux/mernTable/actions/employeeActions/getEmployeeTable",
-        "./getEmployeeTableReset": "./src/redux/mernTable/actions/employeeActions/getEmployeeTable",
+        "./addEmployee":
+          "./src/redux/mernTable/actions/employeeActions/addEmployee",
+        "./addEmployeeReset":
+          "./src/redux/mernTable/actions/employeeActions/addEmployee",
+        "./deleteEmployee":
+          "./src/redux/mernTable/actions/employeeActions/deleteEmployee",
+        "./deleteEmployeeReset":
+          "./src/redux/mernTable/actions/employeeActions/deleteEmployee",
+        "./editEmployee":
+          "./src/redux/mernTable/actions/employeeActions/editEmployee",
+        "./editEmployeeReset":
+          "./src/redux/mernTable/actions/employeeActions/editEmployee",
+        "./getEmployeeProfile":
+          "./src/redux/mernTable/actions/employeeActions/getEmployeeProfile",
+        "./getEmployeeProfileReset":
+          "./src/redux/mernTable/actions/employeeActions/getEmployeeProfile",
+        "./getEmployeeTable":
+          "./src/redux/mernTable/actions/employeeActions/getEmployeeTable",
+        "./getEmployeeTableReset":
+          "./src/redux/mernTable/actions/employeeActions/getEmployeeTable",
       },
       shared: {
         ...deps,
